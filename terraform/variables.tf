@@ -7,7 +7,7 @@ variable "project_id" {
 variable "region" {
   description = "La région GCP où créer les ressources"
   type        = string
-  default     = "europe-west1"
+  default     = "US"
 }
 
 variable "dataset_id" {
