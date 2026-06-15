@@ -1,0 +1,4 @@
+google-cloud-pubsub
+google-cloud-secret-manager
+google-cloud-bigquery
+requests
