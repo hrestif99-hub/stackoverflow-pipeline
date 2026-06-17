@@ -231,3 +231,7 @@ service-account*.json
 # dbt
 dbt_packages/
 target/
+
+# Secrets
+secrets/
+gcp-credentials.jsonairflow/logs/

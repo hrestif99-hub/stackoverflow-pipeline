@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
@@ -12,6 +10,42 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  airflow-webserver:
+    build: .
+    container_name: airflow_webserver
+    command: webserver
+    ports:
+      - "8080:8080"
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/stackoverflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/gcp-credentials.json
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - C:/Users/hugues/stackoverflow-pipeline/secrets/gcp-credentials.json:/opt/airflow/gcp-credentials.json
+    depends_on:
+      - postgres
+
+  airflow-scheduler:
+    build: .
+    container_name: airflow_scheduler
+    command: scheduler
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/stackoverflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      GOOGLE_APPLICATION_CREDENTIALS: /opt/airflow/gcp-credentials.json
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - C:/Users/hugues/stackoverflow-pipeline/secrets/gcp-credentials.json:/opt/airflow/gcp-credentials.json
+    depends_on:
+      - postgres
 
 volumes:
   postgres_data:
