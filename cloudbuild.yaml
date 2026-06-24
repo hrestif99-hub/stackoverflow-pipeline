@@ -7,3 +7,5 @@ steps:
     args: ['validate']
     dir: 'terraform'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
