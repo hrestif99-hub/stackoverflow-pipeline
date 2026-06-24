@@ -16,5 +16,14 @@ steps:
         cd dbt
         dbt build --profiles-dir . --target ci
 
+  - name: 'python:3.12-slim'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        pip install pytest requests google-cloud-pubsub google-cloud-secret-manager --quiet
+        cd cloud_functions
+        pytest test_main.py -v
+
 options:
   logging: CLOUD_LOGGING_ONLY
