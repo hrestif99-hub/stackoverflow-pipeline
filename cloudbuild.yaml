@@ -1,0 +1,9 @@
+steps:
+  - name: 'hashicorp/terraform:1.9'
+    args: ['init', '-backend=false']
+    dir: 'terraform'
+
+  - name: 'hashicorp/terraform:1.9'
+    args: ['validate']
+    dir: 'terraform'
+
