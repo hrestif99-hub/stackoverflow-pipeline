@@ -7,5 +7,14 @@ steps:
     args: ['validate']
     dir: 'terraform'
 
+  - name: 'python:3.12-slim'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        pip install dbt-bigquery --quiet
+        cd dbt
+        dbt build --profiles-dir . --target ci
+
 options:
   logging: CLOUD_LOGGING_ONLY
