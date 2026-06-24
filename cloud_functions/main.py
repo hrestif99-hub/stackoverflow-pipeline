@@ -41,8 +41,6 @@ def fetch_questions(api_key):        # définit la fonction qui récupère les q
     
     return all_questions             # renvoie toutes les questions récupérées
     
-    response = requests.get(url, params=params)  # appelle l'API avec ces paramètres
-    return response.json().get("items", [])      # renvoie la liste des questions
 
 def publish_to_pubsub(questions):    # définit la fonction qui envoie dans Pub/Sub
     publisher = pubsub_v1.PublisherClient()  # crée une connexion à Pub/Sub
