@@ -234,4 +234,6 @@ target/
 
 # Secrets
 secrets/
-gcp-credentials.jsonairflow/logs/
+gcp-credentials.json
+airflow/logs/
+scripts/checkpoint.json

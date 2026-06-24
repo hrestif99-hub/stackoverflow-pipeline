@@ -6,7 +6,7 @@
 SELECT
     DATE(creation_date) AS jour,
     COUNT(*) AS nombre_questions
-FROM `stackoverflow-pipeline.stackoverflow.questions_completes`,
+FROM {{ ref('questions_completes') }},
 UNNEST(SPLIT(tags, '|')) AS tag
 WHERE tag = 'python'
 AND DATE(creation_date) >= '2017-01-01'

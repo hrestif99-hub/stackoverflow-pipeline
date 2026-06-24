@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: stackoverflow
+    description: "Dataset principal du projet, contenant les tables sources et les modèles dbt"
+    dataset: stackoverflow
+    tables:
+      - name: github_activite
+        description: "Volume de push GitHub par langage et par mois, agrégé depuis githubarchive et github_repos.languages. Créée manuellement via CREATE TABLE AS SELECT, pas par dbt."

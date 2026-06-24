@@ -6,7 +6,7 @@
 SELECT
     DATE(creation_date) AS jour,
     COUNT(*) AS nombre_questions
-FROM `stackoverflow-pipeline.stackoverflow.questions_completes`
+FROM {{ ref('questions_completes') }}
 WHERE DATE(creation_date) >= '2017-01-01'
 GROUP BY jour
 ORDER BY jour

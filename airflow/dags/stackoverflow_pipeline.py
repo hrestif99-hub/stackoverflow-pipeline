@@ -107,7 +107,8 @@ with DAG(
         )
 
         # On lit UNIQUEMENT les questions créées aujourd'hui
-        aujourd_hui = date.today().isoformat() # ex: "2026-06-17"
+        jour_des_donnees = date.today().isoformat()                # ex: "2026-06-17" → nom du fichier
+        premier_du_mois = date.today().replace(day=1).isoformat()  # ex: "2026-06-01" → nom du dossier
         df = pd.read_sql("""
             SELECT id, title, creation_date, tags, score, answer_count
             FROM questions
@@ -131,7 +132,7 @@ with DAG(
         # On se connecte à GCS et on envoie le fichier
         client = storage.Client()        # connexion à GCS (utilise automatiquement gcp-credentials.json)
         bucket = client.bucket("stackoverflow-pipeline-lake") # on cible notre bucket
-        blob_path = f"stackoverflow/questions/date={aujourd_hui}/questions.parquet" # chemin du fichier dans GCS
+        blob_path = f"stackoverflow/questions/date={premier_du_mois}/questions_{jour_des_donnees}.parquet"
         blob = bucket.blob(blob_path)    # on prépare l'objet fichier
         blob.upload_from_file(buffer, content_type="application/octet-stream") # on envoie !
 
