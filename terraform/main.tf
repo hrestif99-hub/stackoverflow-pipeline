@@ -39,9 +39,3 @@ resource "google_secret_manager_secret" "stackoverflow_api_key" {
   }
 }
 
-# Permission IAM — Cloud Function peut lire les secrets
-resource "google_project_iam_member" "cloud_function_secret_access" {
-  project = var.project_id
-  role    = "roles/secretmanager.secretAccessor"
-  member  = "serviceAccount:783967523848-compute@developer.gserviceaccount.com"
-}
