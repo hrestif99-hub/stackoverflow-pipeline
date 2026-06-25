@@ -1,0 +1,23 @@
+steps:
+  - name: 'hashicorp/terraform:1.9'
+    args: ['init']
+    dir: 'terraform'
+
+  - name: 'hashicorp/terraform:1.9'
+    args: ['apply', '-auto-approve']
+    dir: 'terraform'
+
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'functions'
+      - 'deploy'
+      - 'stackoverflow-ingestion'
+      - '--gen2'
+      - '--runtime=python312'
+      - '--region=europe-west1'
+      - '--source=cloud_functions'
+      - '--entry-point=run'
+      - '--trigger-http'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
